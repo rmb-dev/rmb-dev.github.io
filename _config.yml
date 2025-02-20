@@ -1,9 +1,9 @@
 ### Site Settings ###
 title               : "rmb_dev"
 description         : Step into the wacky world of cyber security, where I share my struggles, tips, and thoughts on my hobbies and life in general.
-domain              : rmb-dev.github.io    # To force HTTPS, specify the domain without the http at the start, e.g. example.com
-# URL               : https://rmb-dev.github.io  # the base hostname and protocol for your site, e.g. http://example.com
-# baseurl           : /rmb-dev/            # Change to empty quotes if you are hosting your site at <your-username>.github.io directly
+# domain              : rmb-dev.github.io    # To force HTTPS, specify the domain without the http at the start, e.g. example.com
+URL               : https://rmb-dev.github.io  # the base hostname and protocol for your site, e.g. http://example.com
+baseurl             : " "           # Change to empty quotes if you are hosting your site at <your-username>.github.io directly
 # repository        : rmb-dev/rmb-blog     # Change to <your-username>/<your-username>.github.io (or remove it if you don't need remote projects)
 # remote_theme      : rmb-dev/rmb-blog
 open_new_tab        : true                # Opens external URLs in new tab (works for posts, projects and navbar only)
