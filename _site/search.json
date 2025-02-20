@@ -1,0 +1,107 @@
+[
+  
+    {
+      "title"    : "Digital Minimalism",
+      "category" : "",
+      "tags"     : "Social Media, Minimalism, Technology",
+      "url"      : "/rmb-blog/blog/digital-minimalism",
+      "date"     : "2024-02-20 00:00:00 -0500"
+    } ,
+  
+    {
+      "title"    : "chatGPT - virtual helper for masses",
+      "category" : "",
+      "tags"     : "AI, chatGPT, OpenAI",
+      "url"      : "/rmb-blog/blog/chatGPT",
+      "date"     : "2023-04-25 00:00:00 -0400"
+    } ,
+  
+    {
+      "title"    : "Icons for Figma",
+      "category" : "",
+      "tags"     : "figma, icons",
+      "url"      : "/rmb-blog/blog/figma-icons",
+      "date"     : "2023-04-20 13:00:00 -0400"
+    } ,
+  
+    {
+      "title"    : "Useful AI Tools for Frontend Developers",
+      "category" : "",
+      "tags"     : "Coding, Workflow",
+      "url"      : "/rmb-blog/blog/AI-tools",
+      "date"     : "2023-04-10 00:00:00 -0400"
+    } ,
+  
+    {
+      "title"    : "10 basic programming principles every programmer must know",
+      "category" : "",
+      "tags"     : "Coding, Workflow",
+      "url"      : "/rmb-blog/blog/coding",
+      "date"     : "2021-10-10 00:00:00 -0400"
+    } ,
+  
+    {
+      "title"    : "Podcast of the day",
+      "category" : "",
+      "tags"     : "podcast",
+      "url"      : "/rmb-blog/blog/podcast",
+      "date"     : "2021-07-31 00:00:00 -0400"
+    } ,
+  
+    {
+      "title"    : "Quote of the day",
+      "category" : "",
+      "tags"     : "wisdom",
+      "url"      : "/rmb-blog/blog/quote",
+      "date"     : "2020-07-01 00:00:00 -0400"
+    } ,
+  
+    {
+      "title"    : "CSS Properties to use",
+      "category" : "",
+      "tags"     : "code",
+      "url"      : "/rmb-blog/blog/CSS-Properties",
+      "date"     : "2020-06-20 13:00:00 -0400"
+    } ,
+  
+    {
+      "title"    : "Web App - Creation stages",
+      "category" : "",
+      "tags"     : "web development",
+      "url"      : "/rmb-blog/blog/web-app",
+      "date"     : "2020-06-05 00:00:00 -0400"
+    } ,
+  
+    {
+      "title"    : "Quote of the day",
+      "category" : "",
+      "tags"     : "wisdom",
+      "url"      : "/rmb-blog/blog/quote",
+      "date"     : "2020-05-01 00:00:00 -0400"
+    } ,
+  
+    {
+      "title"    : "Quote of the day",
+      "category" : "",
+      "tags"     : "wisdom",
+      "url"      : "/rmb-blog/blog/quote",
+      "date"     : "2020-03-01 00:00:00 -0500"
+    } ,
+  
+    {
+      "title"    : "Quote of the day",
+      "category" : "",
+      "tags"     : "wisdom",
+      "url"      : "/rmb-blog/blog/quote",
+      "date"     : "2020-02-01 00:00:00 -0500"
+    } ,
+  
+    {
+      "title"    : "Quote of the day",
+      "category" : "",
+      "tags"     : "wisdom",
+      "url"      : "/rmb-blog/blog/quote",
+      "date"     : "2020-01-01 00:00:00 -0500"
+    } 
+  
+]

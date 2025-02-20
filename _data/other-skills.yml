@@ -1,0 +1,15 @@
+- name: Figma
+  percentage: 60
+  color: info
+
+- name: Framer
+  percentage: 30
+  color: success
+
+- name: Photoshop
+  percentage: 40
+  color: success
+
+- name: Adobe XD
+  percentage: 30
+  color: danger  
