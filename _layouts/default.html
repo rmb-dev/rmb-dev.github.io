@@ -26,3 +26,15 @@
 </body>
 
 </html>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    let links = document.querySelectorAll("a");
+    links.forEach(link => {
+      if (link.hostname !== window.location.hostname) { // Only external links
+        link.setAttribute("target", "_blank");
+        link.setAttribute("rel", "noopener noreferrer");
+      }
+    });
+  });
+</script>
