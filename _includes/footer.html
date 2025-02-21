@@ -5,13 +5,26 @@
     by <strong><a href="https://github.com/rmb-dev" target="_blank" rel="noopener noreferrer">{{ site.author.name
         }}</a></strong>
   </small>
+  </small>
 
   {% include social.html %}
 
   {%- assign theme_name = "rmb-blog" -%}
-  {%- assign theme_repo = "https://github.com/rmb-dev/rmb-blog" -%}
+  {%- assign theme_repo = "https://rmb-dev.github.com/" -%}
   <!-- <small id="attribution">
     theme <a href="{{ theme_repo }}">{{ theme_name }}</a>
   </small> -->
 
 </footer>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    let links = document.querySelectorAll("a");
+    links.forEach(link => {
+      if (link.hostname !== window.location.hostname) { // Only external links
+        link.setAttribute("target", "_blank");
+        link.setAttribute("rel", "noopener noreferrer");
+      }
+    });
+  });
+</script>
