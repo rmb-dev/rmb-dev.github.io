@@ -1,11 +1,9 @@
 ### Site Settings ###
 title               : "rmb_dev"
-description         : Step into the wacky world of cyber security, where I share my tips and hobbies.
-# domain            : rmb-dev.github.io    # To force HTTPS, specify the domain without the http at the start, e.g. example.com
-# URL               : https://rmb-dev.github.io  # the base hostname and protocol for your site, e.g. http://example.com
-# baseurl           : rmb-dev.github.io    # Change to empty quotes if you are hosting your site at <your-username>.github.io directly
-repository          : rmb-dev/rmb-dev.github.io     # Change to <your-username>/<your-username>.github.io (or remove it if you don't need remote projects)
-# remote_theme      : rmb-dev/rmb-blog
+description         : From the front-end development field to the wacky world of cyber security — documenting my journey through code, hands-on learning, and security challenges along the way
+baseurl             : "/rmb-blog"          # Change to empty quotes if you are hosting your site at <your-username>.github.io directly
+# repository        : rmb-dev/rmb-blog     # Change to <your-username>/<your-username>.github.io (or remove it if you don't need remote projects)
+# remote_theme      : rmb-dev/rmb-blog     # Based on https://github.com/yousinix/portfolYOU theme
 open_new_tab        : true                # Opens external URLs in new tab (works for posts, projects and navbar only)
 
 
@@ -24,12 +22,13 @@ nav_exclude:                  # The following paths are excluded from navbar
 ### Author Info ###
 author:
   name              : rmb
-  image             : https://i.postimg.cc/KYbsbZLg/Letter-Mosaic-3.png
+  image             : https://i.postimg.cc/q7TByXNz/letter-mosaic-bb-smear.gif
+  # image             : https://i.postimg.cc/KYbsbZLg/Letter-Mosaic-3.png
 # behance           : your_username
 # dribbble          : your_username
 # email             : username@domain.com
 # facebook          : your_username
-# github            : your_username
+# github            : 
 # gitlab            : your_username
 # instagram         : your_username
 # kaggle            : your_username
@@ -97,7 +96,7 @@ defaults:
       path: ""
       type: "posts"
     values:
-      comments: false               # Set to true to enable disqus comments
+      comments: true               # Set to true to enable disqus comments
 
 
 ### Exclude from processing ###
