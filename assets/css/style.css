@@ -270,6 +270,7 @@ html {
 
 body {
   font-family: "Jura", sans-serif;
+  font-size: clamp(16px, 1vw, 18px);
 }
 
 .badge {
