@@ -1,49 +1,55 @@
-- title:  UX Design - Fundamentals, Juno College of Technology, Toronto, Canada
-  from: 2021
-  to: 2021
-  description: 
-  # + Heuristic analysis.
-  # + Information architecture.
-  # + Research synthesis.
-  # + Accessibility.
-  # + Empathy Mapping.
-  # + Personas and Mental Models.
-  # + Prototyping.
-  # + Emotional Design.
-  # + Human-Centered Design.
-  # + Usability Testing.
 
-- title:  JavaScript - Advanced, Juno College of Technology, Toronto, Canada
-  from: 2020
-  to: 2020
-  description: 
-                # + Fundamentals of programming using JavaScript.
-                # + Introduction to JavaScript Data structures, including Objects and Arrays.
-                # + jQuery methods and best practices.
-                # + The DOM and how to manipulate it.
-                # + Using browser DevTools to debug projects.
-                # + Best practices to keep code efficient and organized.
-                # + How to use REST APIs.
+- title:  Google IT Support, Google Career Certificates
+  date: 2024
+  description: System Administration and IT Infrastructure Services · Operating Systems · Computer Networking · Technical Support · Security Defense
 
-- title:  Web Development - Fundamentals and Advanced, Juno College of Technology, Toronto, Canada
-  from: 2018
-  to: 2018
+- title:  Google Cybersecurity, Google Career Certificates
+  date: 2024
+  description: Networks and Network Security · Foundations of Cybersecurity · Assets, Threats, and Vulnerabilities · Automate Cybersecurity Tasks with Python · Detection and Response · Linux and SQL · Manage Security Risks
+
+
+- title:  UX Design - Fundamentals, Juno College of Technology
+  date: 2021
   description: 
-                # + HTML5, CSS3 and responsive design.
-                # + Precompiled syntaxes such as Sass.
-                # + Converting professional designs to HTML/CSS.
-                # + Best practices for modern web development.
-                # + Website accessibility requirements.
-                # + Responsive Web Design.
-                # + Intro to JavaScript & jQuery.
+  + Heuristic analysis.
+  + Information architecture.
+  + Research synthesis.
+  + Accessibility.
+  + Empathy Mapping.
+  + Personas and Mental Models.
+  + Prototyping.
+  + Emotional Design.
+  + Human-Centered Design.
+  + Usability Testing.
+
+- title:  JavaScript - Advanced, Juno College of Technology
+  date: 2020
+  description: 
+  + Fundamentals of programming using JavaScript.
+  + Introduction to JavaScript Data structures, including Objects and Arrays.
+  + jQuery methods and best practices.
+  + The DOM and how to manipulate it.
+  + Using browser DevTools to debug projects.
+  + Best practices to keep code efficient and organized.
+  + How to use REST APIs.
+
+- title:  Web Development - Fundamentals and Advanced, Juno College of Technology
+  date: 2018
+  description: 
+  + HTML5, CSS3 and responsive design.
+  + Precompiled syntaxes such as Sass.
+  + Converting professional designs to HTML/CSS.
+  + Best practices for modern web development.
+  + Website accessibility requirements.
+  + Responsive Web Design.
+  + Intro to JavaScript & jQuery.
 
 - title: Introduction to Computer Science - CS50, Harvard University
-  from: 2016
-  to: 2016
+  date: 2016
   description:
-                # + A broad and robust understanding of computer science and programming.
-                # + How to think algorithmically and solve programming problems efficiently.
-                # + Concepts like abstraction, algorithms, data structures, encapsulation, resource management, security, software engineering, and web development.
-                # + Familiarity in a number of languages, including C, PHP, and JavaScript plus SQL, CSS, and HTML.
-                # + How to engage with a vibrant community of like-minded learners from all levels of experience.
-                # + How to develop and present a final programming project to your peers.
+  + A broad and robust understanding of computer science and programming.
+  + How to think algorithmically and solve programming problems efficiently.
+  + Concepts like abstraction, algorithms, data structures, encapsulation, resource management, security, software engineering, and web development.
+  + Familiarity in a number of languages, including C, PHP, and JavaScript plus SQL, CSS, and HTML.
+  + How to engage with a vibrant community of like-minded learners from all levels of experience.
+  + How to develop and present a final programming project to your peers.
