@@ -3,7 +3,41 @@ layout: default
 title: Blog
 permalink: /blog/
 weight: 1
+exam_kit: true
+description: Exam kit for the Hack The Box Certified Junior Cybersecurity Associate (CJCA) — 20 modules of notes and review material.
 ---
 
-{% include blog/search.html %}
-{% include blog/index.html %}
+{%- assign modules = site.modules | sort: 'order' -%}
+{%- assign built_modules = modules | where_exp: "m", "m.placeholder != true" -%}
+
+{%- capture xk_summary -%}<span><strong>{{ built_modules.size }}</strong>/{{ modules.size }} modules written</span><span class="term-summary__dot" aria-hidden="true"></span><span><strong data-total-topics>0</strong> topics</span><span class="term-summary__dot" aria-hidden="true"></span><span><strong data-total-done>0</strong> reviewed</span>{%- endcapture -%}
+
+<header class="xk-hero mt-5 px-3">
+  {% include term/heading.html eyebrow="Hack The Box Academy &middot; Junior Cybersecurity Analyst path" title="CJCA Exam Kit" cwd="~/cjca" cmd="ls ./modules --notes" summary=xk_summary %}
+  <p class="xk-hero__lead">
+    {{ modules.size }} modules, each with sections of theory notes and an exam kit.
+    Open a module, then a topic, to read it here on this page.
+  </p>
+
+  <div class="xk-toolbar">
+    <div class="input-group xk-toolbar__search">
+      <input id="xk-filter" type="search" class="form-control search-box" placeholder="Filter topics…" aria-label="Filter topics">
+      <div class="input-group-append">
+        <span class="input-group-text border border-primary bg-primary text-white"><i class="fas fa-search"></i></span>
+      </div>
+    </div>
+    <div class="btn-group" role="group" aria-label="Expand or collapse">
+      <button type="button" class="btn btn-outline-primary" data-expand-all>Expand all</button>
+      <button type="button" class="btn btn-outline-primary" data-collapse-all>Collapse all</button>
+    </div>
+  </div>
+  <p class="xk-empty" hidden>No topics match that filter.</p>
+</header>
+
+<div class="xk-modules px-3 mb-5">
+  {%- for module in modules -%}
+    {%- include exam-kit/module.html module=module index=forloop.index -%}
+  {%- endfor -%}
+</div>
+
+<script src="{{ '/assets/js/exam-kit.js' | relative_url }}" defer></script>

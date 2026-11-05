@@ -1,0 +1,31 @@
+/* ==========================================================================
+   About page — Tech Stack layout.
+   Panels, chips, heading and animation come from terminal.css.
+   ========================================================================== */
+
+.ts {
+  margin: 3.5rem 0 1rem;
+}
+
+/* Bento grid: two panels stacked left, the larger one spanning right */
+.ts__grid {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: 1fr;
+}
+
+@media (min-width: 768px) {
+  .ts__grid {
+    grid-template-columns: 1fr 1fr;
+    grid-template-areas:
+      "a b"
+      "c b";
+  }
+  .ts__grid > :nth-child(1) { grid-area: a; }
+  .ts__grid > :nth-child(2) { grid-area: b; }
+  .ts__grid > :nth-child(3) { grid-area: c; }
+}
+
+.markdown-body .ts .term-chips {
+  padding-bottom: 1.1rem;
+}

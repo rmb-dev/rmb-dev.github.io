@@ -1,0 +1,20 @@
+{%- comment -%}
+  Terminal-style heading.
+  Params:
+    title    (required) heading text
+    cmd      command shown after the prompt, e.g. "ls ./stack --all"
+    cwd      prompt directory (default "~")
+    tag      h1 | h2 | h3 (default h1)
+    id       id for the heading element
+    eyebrow  small uppercase line above the title
+    summary  HTML for the line under the prompt; separate items with
+             <span class="term-summary__dot"></span>
+{%- endcomment -%}
+{%- assign th_tag = include.tag | default: 'h1' -%}
+{%- assign th_cmd = include.cmd | default: '' -%}
+<header class="term-heading" data-reveal>
+{%- if include.eyebrow %}<p class="term-eyebrow">{{ include.eyebrow }}</p>{% endif %}
+<{{ th_tag }} class="term-heading__title"{% if include.id %} id="{{ include.id }}"{% endif %}>{{ include.title }}</{{ th_tag }}>
+<p class="term-prompt" aria-hidden="true"><span class="term-prompt__user">{{ site.author.name }}@htb</span><span class="term-prompt__sep">:</span><span class="term-prompt__cwd">{{ include.cwd | default: '~' }}</span><span class="term-prompt__dollar">$</span><span class="term-prompt__cmd" style="--n: {{ th_cmd | size }};">{{ th_cmd }}</span><span class="term-prompt__cursor"></span></p>
+{%- if include.summary %}<p class="term-summary">{{ include.summary }}</p>{% endif %}
+</header>

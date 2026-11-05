@@ -5,7 +5,8 @@
     <div id="container" class="my-1">
       <div id="dummy"></div>
       <div id="element">
-        <img src="{{ site.author.image }}" alt="{{ site.title }}" class="circle-image wow animated zoomIn"
+        {%- assign avatar = site.author.image -%}{%- unless avatar contains "://" -%}{%- assign avatar = avatar | relative_url -%}{%- endunless -%}
+        <img src="{{ avatar }}" alt="{{ site.title }}" class="circle-image wow animated zoomIn"
           data-wow-delay=".75s">
       </div>
     </div>

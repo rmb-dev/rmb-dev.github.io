@@ -1,0 +1,9 @@
+# Jekyll build output and caches
+_site/
+.jekyll-cache/
+.jekyll-metadata
+.sass-cache/
+
+# Locally installed gems (bundle config path: vendor/bundle)
+vendor/
+.bundle/

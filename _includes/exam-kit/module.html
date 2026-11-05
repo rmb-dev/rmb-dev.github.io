@@ -1,0 +1,143 @@
+{%- comment -%}
+  Renders one exam-kit module (a doc from the `modules` collection) inline.
+
+  The module's Markdown body is split on its headings:
+    ##  Heading  -> a section (numbered 1., 2., …)
+    ### Heading  -> a topic inside that section (expands in place)
+    ## Exam Kit  -> the module's exam kit; its ### headings become kit cards
+
+  A topic's badge comes from `topic_type` in the module's front matter
+  (default "Theory"). Override one topic with a kramdown attribute:
+    ### Network Concepts
+    {: .interactive}      (or .theory)
+{%- endcomment -%}
+
+{%- assign mod = include.module -%}
+{%- assign mod_id = mod.anchor | default: mod.title | slugify -%}
+{%- assign default_type = mod.topic_type | default: 'Theory' -%}
+{%- capture mod_num -%}{%- if include.index < 10 -%}0{%- endif -%}{{ include.index }}{%- endcapture -%}
+
+{%- assign topic_total = mod.content | split: '<h3' | size | minus: 1 -%}
+{%- if topic_total < 0 -%}{%- assign topic_total = 0 -%}{%- endif -%}
+
+<details class="xk-module term-panel{% if mod.placeholder %} xk-module--placeholder{% endif %}" id="{{ mod_id }}" style="--accent: {% if mod.placeholder %}var(--htb-muted){% else %}var(--htb-green){% endif %};" data-module data-term-panel data-reveal>
+  <summary class="xk-module__head">
+    <div class="term-bar">
+      <span class="term-lights" aria-hidden="true"><i></i><i></i><i></i></span>
+      <span class="term-path" aria-hidden="true">~/cjca/{{ mod_num }}-{{ mod_id }}</span>
+      {%- unless mod.placeholder %}
+      <span class="term-bar__end xk-module__progress" data-progress></span>
+      {%- endunless %}
+    </div>
+    <div class="term-head">
+      <span class="term-icon" aria-hidden="true">{{ mod_num }}</span>
+      <span class="term-title">
+        {{ mod.title }}
+        <span class="term-sub">
+          {%- if mod.placeholder -%}
+            Not written yet
+          {%- else -%}
+            {{ mod.category | default: 'Fundamental' }} | Tier {{ mod.tier | default: 0 }}
+          {%- endif -%}
+        </span>
+      </span>
+      {%- unless mod.placeholder %}
+      <span class="term-count" aria-label="{{ topic_total }} topics">{% if topic_total < 10 %}0{% endif %}{{ topic_total }}</span>
+      {%- endunless %}
+      <i class="fas fa-chevron-down xk-chevron" aria-hidden="true"></i>
+    </div>
+  </summary>
+
+  <div class="xk-module__body">
+  {%- if mod.placeholder -%}
+    <p class="xk-placeholder-note">
+      Add this module's title, tier and notes in <code>{{ mod.path }}</code>,
+      then remove <code>placeholder: true</code> from its front matter.
+    </p>
+  {%- else -%}
+    {%- assign chunks = mod.content | split: '<h2' -%}
+    {%- assign mod_intro = chunks | first | strip -%}
+    {%- if mod_intro != '' -%}
+      <div class="xk-module__intro markdown-body">{{ mod_intro }}</div>
+    {%- endif -%}
+
+    {%- assign sec_n = 0 -%}
+    {%- for chunk in chunks offset: 1 -%}
+      {%- assign head = chunk | split: '</h2>' | first -%}
+      {%- assign attrs = head | split: '>' | first -%}
+      {%- assign sec_title = head | remove_first: attrs | remove_first: '>' | strip -%}
+      {%- assign sec_body = chunk | remove_first: head | remove_first: '</h2>' -%}
+      {%- assign sec_key = sec_title | strip_html | downcase | strip -%}
+      {%- assign is_kit = false -%}
+      {%- if sec_key == 'exam kit' -%}{%- assign is_kit = true -%}{%- endif -%}
+
+      {%- if is_kit -%}
+        {%- assign sec_id = mod_id | append: '--exam-kit' -%}
+      {%- else -%}
+        {%- assign sec_n = sec_n | plus: 1 -%}
+        {%- assign sec_id = mod_id | append: '--s' | append: sec_n -%}
+      {%- endif -%}
+
+      <section class="xk-section{% if is_kit %} xk-section--kit term-panel{% endif %}" id="{{ sec_id }}"{% if is_kit %} style="--accent: var(--htb-yellow);" data-term-panel{% endif %} data-section>
+        {%- if is_kit %}
+        <div class="term-bar" aria-hidden="true">
+          <span class="term-lights"><i></i><i></i><i></i></span>
+          <span class="term-path">~/cjca/{{ mod_num }}/exam-kit</span>
+        </div>
+        {%- endif %}
+        <h2 class="xk-section__title">
+          {%- if is_kit -%}
+            <span class="term-icon" aria-hidden="true"><i class="fas fa-clipboard-check"></i></span> Exam Kit
+          {%- else -%}
+            <span class="xk-section__num">{{ sec_n }}.</span> {{ sec_title }}
+          {%- endif -%}
+        </h2>
+
+        {%- assign topics = sec_body | split: '<h3' -%}
+        {%- assign sec_intro = topics | first | strip -%}
+        {%- if sec_intro != '' -%}
+          <div class="xk-section__intro markdown-body">{{ sec_intro }}</div>
+        {%- endif -%}
+
+        <div class="xk-topics">
+        {%- for topic in topics offset: 1 -%}
+          {%- assign t_head = topic | split: '</h3>' | first -%}
+          {%- assign t_attrs = t_head | split: '>' | first -%}
+          {%- assign t_title = t_head | remove_first: t_attrs | remove_first: '>' | strip -%}
+          {%- assign t_body = topic | remove_first: t_head | remove_first: '</h3>' -%}
+
+          {%- if is_kit -%}
+            {%- assign t_type = 'Exam Kit' -%}
+          {%- elsif t_attrs contains 'interactive' -%}
+            {%- assign t_type = 'Interactive' -%}
+          {%- elsif t_attrs contains 'theory' -%}
+            {%- assign t_type = 'Theory' -%}
+          {%- else -%}
+            {%- assign t_type = default_type -%}
+          {%- endif -%}
+          {%- assign t_id = sec_id | append: '-t' | append: forloop.index -%}
+
+          <details class="xk-topic" id="{{ t_id }}" data-topic>
+            <summary class="xk-topic__head">
+              <span class="xk-badge xk-badge--{{ t_type | slugify }}">{{ t_type }}</span>
+              <span class="xk-topic__title">{{ t_title }}</span>
+              <i class="fas fa-check-circle xk-topic__done" aria-hidden="true" title="Reviewed"></i>
+              <i class="fas fa-chevron-down xk-chevron" aria-hidden="true"></i>
+            </summary>
+            <div class="xk-topic__body">
+              <div class="markdown-body">{{ t_body }}</div>
+              <div class="xk-topic__actions">
+                <button type="button" class="btn btn-sm btn-outline-success" data-mark-done>
+                  <i class="fas fa-check" aria-hidden="true"></i> <span>Mark as reviewed</span>
+                </button>
+                <a class="btn btn-sm btn-link" href="#{{ t_id }}" data-copy-link>Link to this topic</a>
+              </div>
+            </div>
+          </details>
+        {%- endfor -%}
+        </div>
+      </section>
+    {%- endfor -%}
+  {%- endif -%}
+  </div>
+</details>

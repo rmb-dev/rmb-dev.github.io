@@ -1,6 +1,6 @@
 ### Site Settings ###
 title               : "rmb_dev"
-description         : From the front-end development field to the wacky world of cyber security — documenting my journey through code, hands-on learning, and security challenges along the way
+description         : Front-end developer transitioning into cybersecurity. Documenting my path through HTB Academy, sharing Junior Cybersecurity Analyst theory notes, and building a practical exam kit.
 # domain            : rmb-dev.github.io    # To force HTTPS, specify the domain without the http at the start, e.g. example.com
 # URL               : https://rmb-dev.github.io  # the base hostname and protocol for your site, e.g. http://example.com
 # baseurl           : rmb-dev.github.io    # Change to empty quotes if you are hosting your site at <your-username>.github.io directly
@@ -24,14 +24,14 @@ nav_exclude:                  # The following paths are excluded from navbar
 ### Author Info ###
 author:
   name              : rmb
-  image             : https://i.postimg.cc/CKQQzB43/letter-mosaic-bb-smear.gif
+  image             : /assets/CP.png
   # image             : https://i.postimg.cc/KYbsbZLg/Letter-Mosaic-3.png
 # behance           : your_username
 # dribbble          : your_username
 # email             : username@domain.com
 # facebook          : your_username
-# github            : 
-# gitlab            : your_username
+  github            : rmb-dev 
+  gitlab            : rmb_dev
 # instagram         : your_username
 # kaggle            : your_username
 # linkedin          : your_username
@@ -41,7 +41,7 @@ author:
 # stackoverflow     : your_user_id
 # tumblr            : your_username.tumblr.com
   twitch            : rmb_dev
-  twitter           : rmb_dev
+# twitter           : your_username
 # vimeo             : your_username
 # youtube           : your_channel_name
 # keybase           : your_username
@@ -56,6 +56,8 @@ collections:
   projects:
     output: true
     permalink: /projects/:name
+  modules:                                              # HTB CJCA exam kit — rendered inline on the Blog page
+    output: false                                       # No standalone pages; content lives on /blog/
   elements:                                             # For Documentation Only
     output: true                                        # For Documentation Only
 
@@ -98,6 +100,7 @@ defaults:
       path: ""
       type: "posts"
     values:
+      layout: "post"
       comments: true               # Set to true to enable disqus comments
 
 

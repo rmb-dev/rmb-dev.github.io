@@ -1,0 +1,322 @@
+/* ==========================================================================
+   Hack The Box colour scheme — single dark theme for the whole site.
+   Loaded after Bootstrap and style.css, so these rules win.
+   ========================================================================== */
+
+:root {
+  --htb-bg: #141d2b;          /* page background (Node Black) */
+  --htb-bg-deep: #111927;     /* code blocks, inset areas */
+  --htb-surface: #1a2332;     /* cards, panels */
+  --htb-surface-2: #212c3d;   /* hover, inputs */
+  --htb-border: #2a3649;
+  --htb-text: #a4b1cd;        /* body text (Hacker Grey) */
+  --htb-heading: #ffffff;
+  --htb-muted: #7a879f;
+  --htb-green: #9fef00;       /* Hacker Green — primary accent */
+  --htb-green-hover: #b8f54a;
+  --htb-green-soft: rgba(159, 239, 0, 0.12);
+  --htb-blue: #0086ff;        /* Azure */
+  --htb-blue-soft: rgba(0, 134, 255, 0.15);
+  --htb-yellow: #ffaf00;      /* Nugget Yellow */
+  --htb-yellow-soft: rgba(255, 175, 0, 0.13);
+  --htb-red: #ff3e3e;         /* Malware Red */
+  --htb-aqua: #2ee7b6;        /* Aquamarine */
+  --htb-purple: #9f00ff;      /* Vivid Purple */
+  color-scheme: dark;
+}
+
+/* ---------- Base ---------- */
+
+html,
+body,
+[data-theme="dark"] body {
+  background-color: var(--htb-bg);
+  color: var(--htb-text);
+}
+
+h1, h2, h3, h4, h5, h6,
+.h1, .h2, .h3, .h4, .h5, .h6 {
+  color: var(--htb-heading);
+}
+
+a {
+  color: var(--htb-green);
+}
+
+a:hover {
+  color: var(--htb-green-hover);
+}
+
+hr {
+  border-top-color: var(--htb-border);
+}
+
+::selection {
+  background: var(--htb-green);
+  color: var(--htb-bg);
+}
+
+:focus-visible {
+  outline: 2px solid var(--htb-green);
+  outline-offset: 2px;
+}
+
+.text-muted {
+  color: var(--htb-muted) !important;
+}
+
+.text-themed,
+.navbar-themed .navbar-brand,
+.navbar-themed .navbar-nav .nav-link.active {
+  color: var(--htb-heading) !important;
+}
+
+.bg-themed {
+  background-color: var(--htb-surface) !important;
+}
+
+/* ---------- Navbar ---------- */
+
+.navbar-themed .navbar-nav .nav-link {
+  color: var(--htb-text);
+}
+
+.navbar-themed .navbar-nav .nav-link:hover {
+  color: var(--htb-heading);
+}
+
+.link-after,
+.nav-link::after,
+.navbar-brand::after,
+.nav-item.active::after {
+  background: var(--htb-green);
+}
+
+.navbar-toggler .fa-bars {
+  color: var(--htb-heading);
+}
+
+/* ---------- Bootstrap "primary" -> HTB green ---------- */
+
+.text-primary { color: var(--htb-green) !important; }
+.bg-primary { background-color: var(--htb-green) !important; }
+.border-primary { border-color: var(--htb-green) !important; }
+.badge-primary { background-color: var(--htb-green); color: var(--htb-bg); }
+
+.bg-primary,
+.bg-primary.text-white,
+.input-group-text.bg-primary {
+  color: var(--htb-bg) !important;
+}
+
+.btn-primary {
+  background-color: var(--htb-green);
+  border-color: var(--htb-green);
+  color: var(--htb-bg);
+  font-weight: 600;
+}
+
+.btn-primary:hover,
+.btn-primary:focus,
+.btn-primary:not(:disabled):not(.disabled):active {
+  background-color: var(--htb-green-hover);
+  border-color: var(--htb-green-hover);
+  color: var(--htb-bg);
+}
+
+.btn-outline-primary {
+  color: var(--htb-green);
+  border-color: var(--htb-green);
+}
+
+.btn-outline-primary:hover,
+.btn-outline-primary:not(:disabled):not(.disabled):active {
+  background-color: var(--htb-green);
+  border-color: var(--htb-green);
+  color: var(--htb-bg);
+}
+
+.btn-outline-success {
+  color: var(--htb-green);
+  border-color: var(--htb-green);
+}
+
+.btn-outline-success:hover,
+.btn-outline-success:not(:disabled):not(.disabled):active {
+  background-color: var(--htb-green);
+  border-color: var(--htb-green);
+  color: var(--htb-bg);
+}
+
+.btn-link {
+  color: var(--htb-green);
+}
+
+.btn:focus,
+.btn.focus,
+.form-control:focus {
+  box-shadow: 0 0 0 0.2rem var(--htb-green-soft) !important;
+}
+
+.badge-secondary { background-color: var(--htb-surface-2); color: var(--htb-text); }
+.badge-dark { background-color: var(--htb-bg-deep); }
+.badge-info { background-color: var(--htb-blue); }
+.badge-success { background-color: var(--htb-green); color: var(--htb-bg); }
+.badge-warning { background-color: var(--htb-yellow); color: var(--htb-bg); }
+.badge-danger { background-color: var(--htb-red); }
+
+/* Bootstrap colour utilities (skill bars, etc.) -> HTB accents */
+.bg-success { background-color: var(--htb-green) !important; }
+.bg-info { background-color: var(--htb-blue) !important; }
+.bg-warning { background-color: var(--htb-yellow) !important; }
+.bg-danger { background-color: var(--htb-red) !important; }
+.bg-secondary { background-color: var(--htb-muted) !important; }
+
+.progress {
+  background-color: var(--htb-surface-2);
+}
+
+/* ---------- Forms ---------- */
+
+input,
+.form-control,
+[data-theme="dark"] input {
+  background-color: var(--htb-surface);
+  border-color: var(--htb-border);
+  color: var(--htb-heading);
+}
+
+input:focus,
+.form-control:focus,
+[data-theme="dark"] input:focus {
+  background-color: var(--htb-surface-2);
+  border-color: var(--htb-green);
+  color: var(--htb-heading);
+}
+
+input::placeholder,
+[data-theme="dark"] input::placeholder {
+  color: var(--htb-muted);
+}
+
+/* ---------- Cards, lists ---------- */
+
+.card,
+[data-theme="dark"] .card {
+  background-color: var(--htb-surface);
+  border-color: var(--htb-border);
+}
+
+.card-footer,
+[data-theme="dark"] .card.border .card-footer {
+  background-color: var(--htb-bg-deep);
+  border-top-color: var(--htb-border);
+}
+
+.post.card:hover,
+.project.card:hover {
+  border-color: var(--htb-green) !important;
+}
+
+.project.card:hover:not(.post) {
+  box-shadow: 0 8px 32px -12px rgba(159, 239, 0, 0.25);
+}
+
+.list-group-item,
+[data-theme="dark"] .list-group-item-action {
+  background-color: var(--htb-surface);
+  border-color: var(--htb-border);
+  color: var(--htb-text);
+}
+
+.list-group-item-action:hover,
+.list-group-item-action:focus,
+[data-theme="dark"] .list-group-item-action:hover,
+[data-theme="dark"] .list-group-item-action:focus {
+  background-color: var(--htb-surface-2);
+  color: var(--htb-heading);
+}
+
+.post-metadata .tag:hover {
+  background-color: var(--htb-green);
+  color: var(--htb-bg) !important;
+}
+
+/* ---------- Markdown content ---------- */
+
+.markdown-body a:not(.btn):not([class^="carousel-"]):not([class^="list-"]):not(.no-underline):hover {
+  color: var(--htb-green-hover);
+}
+
+.markdown-body a:not(.btn):not([class^="carousel-"]):not([class^="list-"]):not(.no-underline)::after {
+  background: var(--htb-green);
+}
+
+.markdown-body strong {
+  color: var(--htb-heading);
+}
+
+.markdown-body hr {
+  background: var(--htb-border);
+}
+
+.markdown-body blockquote {
+  border-left-color: var(--htb-green);
+  color: var(--htb-muted);
+}
+
+.markdown-body pre,
+[data-theme="dark"] .highlight,
+[data-theme="dark"] pre {
+  background-color: var(--htb-bg-deep) !important;
+  border: 1px solid var(--htb-border);
+  color: var(--htb-text);
+}
+
+.markdown-body code.highlighter-rouge,
+[data-theme="dark"] code.highlighter-rouge {
+  background-color: var(--htb-bg-deep) !important;
+  color: var(--htb-green);
+}
+
+.markdown-body table:not(.highlight) th {
+  background-color: var(--htb-surface-2);
+  color: var(--htb-heading);
+  border-color: var(--htb-border);
+}
+
+.markdown-body table:not(.highlight) td,
+[data-theme="dark"] table:not(.highlight) td {
+  border-color: var(--htb-border);
+}
+
+.markdown-body table:not(.highlight) tr:nth-child(even),
+[data-theme="dark"] table:not(.highlight) tr:nth-child(even) {
+  background-color: rgba(255, 255, 255, 0.03);
+}
+
+/* ---------- Timeline (About page) ---------- */
+
+.timeline-body:after {
+  background-color: var(--htb-green);
+}
+
+.timeline-body .timeline-item:after,
+[data-theme="dark"] .timeline-body .timeline-item:after {
+  border-color: var(--htb-green);
+  background-color: var(--htb-bg);
+}
+
+.timeline-body .timeline-item .content {
+  border-bottom-color: var(--htb-border);
+}
+
+.timeline-body .timeline-item .content .date {
+  color: var(--htb-muted);
+}
+
+/* ---------- Scrollbar ---------- */
+
+html {
+  scrollbar-color: var(--htb-border) var(--htb-bg);
+}

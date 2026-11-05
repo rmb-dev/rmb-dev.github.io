@@ -1,0 +1,49 @@
+# Tech stack shown on the About page (_includes/about/tech-stack.html)
+#
+# Per category:
+#   title, path (shown in the terminal title bar), icon (Font Awesome),
+#   accent (HTB colour for the panel)
+# Per item:
+#   name   – label
+#   si     – Simple Icons slug (https://simpleicons.org), logo tinted with `color`
+#   fa     – Font Awesome class, used when Simple Icons has no logo
+#   color  – brand colour
+
+- title: Front-End & Web Development
+  path: ~/stack/web
+  icon: fas fa-code
+  accent: "#0086ff"
+  items:
+    - { name: HTML,       si: html5,      color: "#e34f26" }
+    - { name: CSS,        si: css3,       color: "#2d8fe8" }
+    - { name: JavaScript, si: javascript, color: "#f7df1e" }
+    - { name: Astro,      si: astro,      color: "#bc52ee" }
+    - { name: Python,     si: python,     color: "#4b8bbe" }
+
+- title: Scripting, DevOps & Systems
+  path: ~/stack/ops
+  icon: fas fa-terminal
+  accent: "#9fef00"
+  items:
+    - { name: Bash,             si: gnubash,         color: "#4eaa25" }
+    - { name: PowerShell,       si: powershell,      color: "#5391fe" }
+    - { name: Git,              si: git,             color: "#f05032" }
+    - { name: GitHub Actions,   si: githubactions,   color: "#2088ff" }
+    - { name: Cloudflare Pages, si: cloudflarepages, color: "#f38020" }
+    - { name: Docker,           si: docker,          color: "#2496ed" }
+    - { name: AWS,              si: amazonaws,       color: "#ff9900" }
+    - { name: REST APIs,        fa: fas fa-exchange-alt, color: "#2ee7b6" }
+    - { name: Linux,            si: linux,           color: "#fcc624" }
+    - { name: Windows,          si: windows,         color: "#00a4ef" }
+
+- title: Cybersecurity Software & Tools
+  path: ~/stack/sec
+  icon: fas fa-user-secret
+  accent: "#ff3e3e"
+  items:
+    - { name: Nmap,          fa: fas fa-satellite-dish, color: "#4fa3e0" }
+    - { name: Metasploit,    si: metasploit,    color: "#2596cd" }
+    - { name: Elastic Stack, si: elasticstack,  color: "#00bfb3" }
+    - { name: Wireshark,     si: wireshark,     color: "#3a9ad9" }
+    - { name: SQLMap,        fa: fas fa-database, color: "#ff3e3e" }
+    - { name: Burp Suite,    si: burpsuite,     color: "#ff6633" }

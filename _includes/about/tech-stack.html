@@ -1,0 +1,41 @@
+{%- comment -%}
+  Tech stack panels for the About page. Data: _data/tech-stack.yml
+  Built from the shared terminal components (assets/css/terminal.css).
+  Logos: Simple Icons (pinned), tinted with each brand colour via CSS mask.
+{%- endcomment -%}
+{%- assign stack = site.data.tech-stack -%}
+{%- assign si_cdn = "https://cdn.jsdelivr.net/npm/simple-icons@11.14.0/icons/" -%}
+{%- assign total = 0 -%}
+{%- for cat in stack -%}{%- assign total = total | plus: cat.items.size -%}{%- endfor -%}
+{%- capture ts_summary -%}<span><strong>{{ total }}</strong> tools</span><span class="term-summary__dot" aria-hidden="true"></span><span><strong>{{ stack.size }}</strong> domains</span>{%- endcapture -%}
+
+<section class="ts" aria-labelledby="ts-title">
+{% include term/heading.html tag="h2" id="ts-title" title="Tech Stack" cmd="ls ./stack --all" summary=ts_summary %}
+<div class="ts__grid">
+{%- for cat in stack %}
+<article class="term-panel" style="--accent: {{ cat.accent }};" data-term-panel data-reveal>
+  <div class="term-bar" aria-hidden="true">
+    <span class="term-lights"><i></i><i></i><i></i></span>
+    <span class="term-path">{{ cat.path }}</span>
+  </div>
+  <div class="term-head">
+    <span class="term-icon" aria-hidden="true"><i class="{{ cat.icon }}"></i></span>
+    <h3 class="term-title">{{ cat.title }}</h3>
+    <span class="term-count" aria-label="{{ cat.items.size }} tools">{% if cat.items.size < 10 %}0{% endif %}{{ cat.items.size }}</span>
+  </div>
+  <ul class="term-chips term-body">
+    {%- for item in cat.items %}
+    <li class="term-chip" style="--c: {{ item.color }}; --i: {{ forloop.index0 }};">
+      {%- if item.si %}
+      <span class="term-chip__logo" style="--logo: url('{{ si_cdn }}{{ item.si }}.svg');" aria-hidden="true"></span>
+      {%- else %}
+      <span class="term-chip__logo" aria-hidden="true"><i class="{{ item.fa }}"></i></span>
+      {%- endif %}
+      <span class="term-chip__name">{{ item.name }}</span>
+    </li>
+    {%- endfor %}
+  </ul>
+</article>
+{%- endfor %}
+</div>
+</section>

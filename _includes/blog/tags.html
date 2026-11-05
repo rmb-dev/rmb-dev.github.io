@@ -8,26 +8,40 @@
 {%- endfor -%}
 {%- assign tags = tags | split:'|' | uniq | sort -%}
 
-<!-- List tags & related posts -->
-{% for tag in tags %}
-<div class="py-3">
-  <h4 id="{{ tag | slugify }}">{{ tag }}</h4>
-  <ol>
-    {% for post in site.posts %}
-    {%- if post.tags contains tag -%}
-    {%- if post.external_url -%}
-    {%- assign url = post.external_url -%}
-    {%- else -%}
-    {%- assign url = post.url | relative_url -%}
-    {%- endif -%}
-    <a href="{{ url }}">
-      <li>{{ post.title }}</li>
-    </a>
-    <small class="text-muted"> - {{ post.date | date_to_long_string }}</small>
-    <br />
-    {%- endif -%}
-    {% endfor %}
+{%- capture tags_summary -%}<span><strong>{{ tags.size }}</strong> tags</span><span class="term-summary__dot" aria-hidden="true"></span><span><strong>{{ site.posts.size }}</strong> posts</span>{%- endcapture -%}
+
+{% include term/heading.html title="Tags" cwd="~/blog" cmd="ls ./tags" summary=tags_summary %}
+
+<ul class="term-tags tags-index" aria-label="All tags">
+  {%- for tag in tags %}
+  <li><a class="term-tag no-underline" href="#tag-{{ tag | slugify }}">{{ tag }}</a></li>
+  {%- endfor %}
+</ul>
+
+<div class="term-grid tags-grid">
+{%- for tag in tags %}
+{%- assign tag_posts = site.posts | where_exp: "p", "p.tags contains tag" %}
+<section class="term-panel" id="tag-{{ tag | slugify }}" data-term-panel data-reveal>
+  <div class="term-bar" aria-hidden="true">
+    <span class="term-lights"><i></i><i></i><i></i></span>
+    <span class="term-path">~/blog/tags/{{ tag | slugify }}</span>
+  </div>
+  <div class="term-head">
+    <span class="term-icon" aria-hidden="true"><i class="fas fa-hashtag"></i></span>
+    <h2 class="term-title">{{ tag }}</h2>
+    <span class="term-count" aria-label="{{ tag_posts.size }} posts">{% if tag_posts.size < 10 %}0{% endif %}{{ tag_posts.size }}</span>
+  </div>
+  <ol class="tag-posts term-body">
+    {%- for post in tag_posts %}
+    {%- if post.external_url -%}{%- assign url = post.external_url -%}{%- else -%}{%- assign url = post.url | relative_url -%}{%- endif %}
+    <li>
+      <a class="term-chip no-underline" href="{{ url }}">
+        <span class="term-chip__logo" aria-hidden="true"><i class="fas fa-file-alt"></i></span>
+        <span class="term-chip__name">{{ post.title }}<span class="term-sub">{{ post.date | date: '%b %-d, %Y' }}</span></span>
+      </a>
+    </li>
+    {%- endfor %}
   </ol>
+</section>
+{%- endfor %}
 </div>
-<hr class="bg-light">
-{% endfor %}

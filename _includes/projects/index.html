@@ -1,4 +1,11 @@
-<div class="card-columns m-3 mt-5">
+{%- assign project_total = site.projects.size | plus: page.remote_projects.size -%}
+{%- capture pr_summary -%}<span><strong>{{ project_total }}</strong> {% if project_total == 1 %}project{% else %}projects{% endif %}</span>{%- endcapture -%}
+
+<div class="mx-3 mt-5">
+{% include term/heading.html title="Projects" cwd="~/projects" cmd="ls -la" summary=pr_summary %}
+</div>
+
+<div class="term-grid mx-3 mb-5">
 
   <!-- Remote Projects -->
   {% for remote_project in page.remote_projects %}

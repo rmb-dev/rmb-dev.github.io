@@ -1,0 +1,733 @@
+/* ==========================================================================
+   Terminal UI components — shared across the whole site.
+   Uses the HTB palette from htb.css. Behaviour: assets/js/terminal.js
+
+   .term-heading   page/section heading with a typed shell prompt
+   .term-panel     terminal-window panel (accent glow, grid, spotlight)
+   .term-bar       window title bar (traffic lights + path)
+   .term-head      icon tile + title + outlined count
+   .term-chip      tool/item tile with a tinted logo
+   .term-tag       small monospace pill (tags, dates)
+   [data-reveal]   fades in when scrolled into view
+   ========================================================================== */
+
+:root {
+  --term-mono: ui-monospace, "SFMono-Regular", "JetBrains Mono", Menlo, Consolas, monospace;
+}
+
+/* ---------- Heading + prompt ---------- */
+
+.term-heading {
+  margin: 0 0 1.5rem;
+}
+
+.term-eyebrow {
+  font-family: var(--term-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--htb-muted);
+  margin: 0 0 0.35rem;
+}
+
+.term-heading__title,
+.markdown-body .term-heading__title {
+  margin: 0 0 0.35rem;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+  overflow-wrap: anywhere;
+}
+
+.term-prompt {
+  font-family: var(--term-mono);
+  font-size: 0.9rem;
+  margin: 0 0 0.5rem;
+  color: var(--htb-text);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.term-prompt__user { color: var(--htb-green); }
+.term-prompt__sep { color: var(--htb-muted); }
+.term-prompt__cwd { color: var(--htb-blue); }
+.term-prompt__dollar { color: var(--htb-muted); margin: 0 0.5ch 0 0.25ch; }
+
+.term-prompt__cmd {
+  display: inline-block;
+  vertical-align: bottom;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.term-prompt__cursor {
+  display: inline-block;
+  width: 0.6em;
+  height: 1.1em;
+  margin-left: 2px;
+  vertical-align: text-bottom;
+  background: var(--htb-green);
+  animation: term-blink 1s step-end infinite;
+}
+
+.term-summary {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.4rem 0.75rem;
+  font-size: 0.85rem;
+  color: var(--htb-muted);
+  margin: 0;
+}
+
+.term-summary strong {
+  color: var(--htb-heading);
+  font-variant-numeric: tabular-nums;
+}
+
+.term-summary__dot {
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: var(--htb-border);
+}
+
+@keyframes term-type { from { width: 0; } }
+@keyframes term-blink { 50% { opacity: 0; } }
+
+/* ---------- Panel ---------- */
+
+.term-panel {
+  --accent: var(--htb-green);
+  --mx: 50%;
+  --my: 0%;
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  border-radius: 14px;
+  border: 1px solid var(--htb-border);
+  background:
+    radial-gradient(120% 70% at 100% 0%, color-mix(in srgb, var(--accent) 14%, transparent), transparent 60%),
+    var(--htb-surface);
+  color: var(--htb-text);
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Fine grid texture, fading out downwards */
+.term-panel::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  max-height: 420px;
+  background-image:
+    linear-gradient(color-mix(in srgb, var(--accent) 9%, transparent) 1px, transparent 1px),
+    linear-gradient(90deg, color-mix(in srgb, var(--accent) 9%, transparent) 1px, transparent 1px);
+  background-size: 22px 22px;
+  -webkit-mask-image: linear-gradient(180deg, #000 0%, transparent 100%);
+          mask-image: linear-gradient(180deg, #000 0%, transparent 100%);
+  pointer-events: none;
+}
+
+/* Spotlight that follows the pointer (position set by terminal.js) */
+.term-panel::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: radial-gradient(380px circle at var(--mx) var(--my),
+              color-mix(in srgb, var(--accent) 16%, transparent), transparent 60%);
+  opacity: 0;
+  transition: opacity 0.35s ease;
+  pointer-events: none;
+}
+
+.term-panel:hover,
+.term-panel[open] {
+  border-color: color-mix(in srgb, var(--accent) 55%, var(--htb-border));
+  box-shadow:
+    0 0 0 1px color-mix(in srgb, var(--accent) 20%, transparent),
+    0 18px 50px -24px color-mix(in srgb, var(--accent) 55%, transparent);
+}
+
+.term-panel:hover::after {
+  opacity: 1;
+}
+
+a.term-panel,
+a.term-panel:hover {
+  text-decoration: none;
+  color: var(--htb-text);
+}
+
+/* ---------- Title bar ---------- */
+
+.term-bar {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  min-width: 0;
+  padding: 0.55rem 0.9rem;
+  background: color-mix(in srgb, var(--htb-bg-deep) 85%, transparent);
+  border-bottom: 1px solid var(--htb-border);
+  font-family: var(--term-mono);
+  font-size: 0.75rem;
+  color: var(--htb-muted);
+}
+
+.term-lights {
+  display: inline-flex;
+  gap: 6px;
+  flex-shrink: 0;
+}
+
+.term-lights i {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+}
+
+.term-lights i:nth-child(1) { background: #ff5f57; }
+.term-lights i:nth-child(2) { background: #febc2e; }
+.term-lights i:nth-child(3) { background: #28c840; }
+
+.term-path {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.term-path::before {
+  content: "❯ ";
+  color: var(--accent);
+}
+
+.term-bar__end {
+  margin-left: auto;
+  flex-shrink: 0;
+  white-space: nowrap;
+}
+
+/* ---------- Heading row ---------- */
+
+.term-head {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  padding: 1.1rem 1.1rem 0.9rem;
+  min-width: 0;
+}
+
+.term-icon {
+  display: grid;
+  place-items: center;
+  width: 42px;
+  height: 42px;
+  flex-shrink: 0;
+  border-radius: 11px;
+  color: var(--accent);
+  background: color-mix(in srgb, var(--accent) 13%, transparent);
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--accent) 35%, transparent),
+              0 0 24px -6px color-mix(in srgb, var(--accent) 60%, transparent);
+  font-size: 1.05rem;
+  font-family: var(--term-mono);
+  font-weight: 700;
+}
+
+.term-title,
+.markdown-body .term-title {
+  margin: 0;
+  font-size: 1.02rem;
+  font-weight: 600;
+  line-height: 1.3;
+  color: var(--htb-heading);
+  min-width: 0;
+}
+
+.term-sub {
+  display: block;
+  font-size: 0.8rem;
+  font-weight: 400;
+  color: var(--htb-muted);
+  margin-top: 0.15rem;
+}
+
+.term-count {
+  margin-left: auto;
+  flex-shrink: 0;
+  font-family: var(--term-mono);
+  font-size: 1.6rem;
+  font-weight: 700;
+  line-height: 1;
+  color: transparent;
+  -webkit-text-stroke: 1px color-mix(in srgb, var(--accent) 70%, transparent);
+  font-variant-numeric: tabular-nums;
+}
+
+.term-body {
+  padding: 0 1.1rem 1.1rem;
+}
+
+/* ---------- Chips ---------- */
+
+.term-chips,
+.markdown-body .term-chips {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(132px, 1fr));
+  gap: 0.6rem;
+}
+
+.term-chip {
+  --c: var(--accent, var(--htb-green));
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  min-width: 0;
+  padding: 0.5rem 0.65rem;
+  border-radius: 10px;
+  border: 1px solid var(--htb-border);
+  background: color-mix(in srgb, var(--htb-bg-deep) 70%, transparent);
+  color: var(--htb-heading);
+  transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease, background 0.25s ease;
+}
+
+a.term-chip,
+a.term-chip:hover {
+  text-decoration: none;
+  color: var(--htb-heading);
+}
+
+.term-chip:hover {
+  transform: translateY(-3px);
+  border-color: color-mix(in srgb, var(--c) 65%, transparent);
+  background: color-mix(in srgb, var(--c) 9%, var(--htb-bg-deep));
+  box-shadow: 0 10px 26px -14px var(--c);
+}
+
+.term-chip__logo {
+  width: 30px;
+  height: 30px;
+  flex-shrink: 0;
+  border-radius: 8px;
+  position: relative;
+  display: grid;
+  place-items: center;
+  color: var(--c);
+  font-size: 0.85rem;
+  background: color-mix(in srgb, var(--c) 14%, transparent);
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--c) 28%, transparent);
+}
+
+/* Logo from an SVG URL (--logo), tinted with the chip colour */
+.term-chip__logo[style*="--logo"]::before {
+  content: "";
+  position: absolute;
+  inset: 6px;
+  background: var(--c);
+  -webkit-mask: var(--logo) center / contain no-repeat;
+          mask: var(--logo) center / contain no-repeat;
+}
+
+.term-chip__name {
+  font-size: 0.88rem;
+  line-height: 1.2;
+  overflow-wrap: anywhere;
+}
+
+/* ---------- Tags ---------- */
+
+.term-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.term-tag,
+.markdown-body a.term-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  font-family: var(--term-mono);
+  font-size: 0.75rem;
+  line-height: 1;
+  padding: 0.35rem 0.6rem;
+  border-radius: 999px;
+  border: 1px solid color-mix(in srgb, var(--accent, var(--htb-green)) 40%, var(--htb-border));
+  background: color-mix(in srgb, var(--accent, var(--htb-green)) 8%, transparent);
+  color: var(--accent, var(--htb-green));
+  text-decoration: none;
+  white-space: nowrap;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+.term-tag::before {
+  content: "#";
+  opacity: 0.6;
+}
+
+.term-tag--plain::before {
+  content: none;
+}
+
+a.term-tag:hover,
+.markdown-body a.term-tag:hover {
+  background: var(--accent, var(--htb-green));
+  color: var(--htb-bg);
+  text-decoration: none;
+}
+
+.markdown-body a.term-tag::after {
+  content: none !important;
+}
+
+/* ---------- Timeline ---------- */
+
+.term-timeline,
+.markdown-body .term-timeline {
+  list-style: none;
+  margin: 0;
+  padding-top: 1.25rem;
+  padding-left: 2.6rem;
+  position: relative;
+}
+
+/* Vertical rail */
+.term-timeline::before {
+  content: "";
+  position: absolute;
+  left: 1.6rem;
+  top: 1.5rem;
+  bottom: 1.5rem;
+  width: 2px;
+  background: linear-gradient(180deg, var(--accent), color-mix(in srgb, var(--accent) 10%, transparent));
+}
+
+.term-timeline__item {
+  position: relative;
+  padding: 0 0 1.4rem 0.4rem;
+}
+
+.term-timeline__item + .term-timeline__item {
+  padding-top: 1.2rem;
+  border-top: 1px dashed var(--htb-border);
+}
+
+/* Node on the rail */
+.term-timeline__item::before {
+  content: "";
+  position: absolute;
+  left: calc(-1rem - 7px);
+  top: 0.3rem;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: var(--htb-bg);
+  border: 2px solid var(--accent);
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--accent) 12%, transparent),
+              0 0 14px color-mix(in srgb, var(--accent) 55%, transparent);
+}
+
+.term-timeline__item + .term-timeline__item::before {
+  top: 1.5rem;
+}
+
+.term-timeline__date {
+  margin-bottom: 0.5rem;
+}
+
+.term-timeline .term-title {
+  margin-bottom: 0.6rem;
+}
+
+.term-timeline__tags .term-tag {
+  color: var(--htb-text);
+  border-color: var(--htb-border);
+  background: color-mix(in srgb, var(--htb-bg-deep) 70%, transparent);
+  white-space: normal;
+  line-height: 1.3;
+}
+
+.term-timeline__item:last-child {
+  padding-bottom: 0.25rem;
+}
+
+/* ---------- Media (image under the title bar) ---------- */
+
+.term-media {
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  border-bottom: 1px solid var(--htb-border);
+  background: var(--htb-bg-deep);
+}
+
+.term-media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top center;
+  display: block;
+  transition: transform 0.6s ease;
+}
+
+.term-panel:hover .term-media img {
+  transform: scale(1.04);
+}
+
+.project-card .term-head {
+  padding-bottom: 0.6rem;
+}
+
+.project-card__desc {
+  color: var(--htb-text);
+  margin-bottom: 0.9rem;
+}
+
+/* ---------- Post pages ---------- */
+
+.markdown-body .post-tags {
+  margin: -0.5rem 0 2rem;
+  padding: 0;
+}
+
+.post-content {
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--htb-border);
+}
+
+.post-content > h2:first-child,
+.post-content > h1:first-child {
+  margin-top: 0;
+}
+
+/* ---------- Tags page ---------- */
+
+.markdown-body .tags-index {
+  margin: 0 0 1.75rem;
+  padding: 0;
+}
+
+.tags-grid {
+  align-items: start;
+}
+
+.tags-grid .term-panel {
+  scroll-margin-top: 1.5rem;
+}
+
+.tags-grid .term-panel:target {
+  border-color: var(--accent);
+}
+
+.markdown-body .tag-posts {
+  list-style: none;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.markdown-body .tag-posts .term-chip::after {
+  content: none !important;
+}
+
+.markdown-body .tag-posts .term-chip {
+  display: flex;
+}
+
+/* ---------- Home ---------- */
+
+.home__avatar {
+  max-width: 220px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.home__avatar .circle-image {
+  box-shadow:
+    0 0 0 3px var(--htb-bg),
+    0 0 0 5px var(--htb-green),
+    0 0 40px -4px rgba(159, 239, 0, 0.55);
+}
+
+.home .term-heading {
+  margin: 1.75rem 0 1rem;
+}
+
+.home .term-prompt {
+  display: inline-block;
+  max-width: 100%;
+}
+
+.home__lead {
+  color: var(--htb-text);
+  max-width: 34rem;
+  margin: 0 auto 1.75rem;
+}
+
+.home__links {
+  grid-template-columns: repeat(3, 1fr);
+  text-align: left;
+}
+
+@media (max-width: 575.98px) {
+  .home .home__links {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ---------- Grid helper ---------- */
+
+.term-grid {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 300px), 1fr));
+}
+
+/* ---------- Code blocks get a terminal title bar ---------- */
+
+.markdown-body div.highlighter-rouge {
+  position: relative;
+  margin-bottom: 1.6em;
+  border: 1px solid var(--htb-border);
+  border-radius: 10px;
+  overflow: hidden;
+  background: var(--htb-bg-deep);
+}
+
+.markdown-body div.highlighter-rouge::before {
+  content: "";
+  display: block;
+  height: 30px;
+  border-bottom: 1px solid var(--htb-border);
+  background:
+    radial-gradient(circle at 16px 15px, #ff5f57 5px, transparent 5.5px),
+    radial-gradient(circle at 32px 15px, #febc2e 5px, transparent 5.5px),
+    radial-gradient(circle at 48px 15px, #28c840 5px, transparent 5.5px),
+    color-mix(in srgb, var(--htb-surface) 70%, transparent);
+}
+
+.markdown-body div.highlighter-rouge pre,
+.markdown-body div.highlighter-rouge .highlight {
+  margin: 0;
+  border: 0 !important;
+  border-radius: 0;
+  background: transparent !important;
+}
+
+/* ---------- Scroll reveal (only when terminal.js runs) ---------- */
+
+.term-js [data-reveal] {
+  opacity: 0;
+  transform: translateY(18px);
+  transition: opacity 0.6s ease var(--d, 0s), transform 0.6s ease var(--d, 0s),
+              border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.term-js [data-reveal].is-in {
+  opacity: 1;
+  transform: none;
+}
+
+.term-js [data-reveal] .term-chip {
+  opacity: 0;
+  transform: translateY(8px) scale(0.97);
+}
+
+.term-js [data-reveal].is-in .term-chip {
+  opacity: 1;
+  transform: none;
+  transition: opacity 0.45s ease calc(0.15s + var(--i, 0) * 45ms),
+              transform 0.45s ease calc(0.15s + var(--i, 0) * 45ms),
+              border-color 0.25s ease, box-shadow 0.25s ease, background 0.25s ease;
+}
+
+.term-js [data-reveal].is-in .term-chip:hover {
+  transform: translateY(-3px);
+  transition-delay: 0s;
+}
+
+/* Typing effect: runs once the heading is revealed */
+.term-js [data-reveal] .term-prompt__cmd {
+  width: 0;
+}
+
+.term-js [data-reveal].is-in .term-prompt__cmd {
+  width: calc(var(--n, 12) * 1ch);
+  animation: term-type calc(var(--n, 12) * 80ms) steps(var(--n, 12), end) 0.2s both;
+}
+
+/* ---------- Small screens ---------- */
+
+@media (max-width: 575.98px) {
+  .term-chips,
+  .markdown-body .term-chips {
+    grid-template-columns: 1fr 1fr;
+    gap: 0.5rem;
+  }
+
+  .term-head {
+    padding: 1rem 0.8rem 0.8rem;
+  }
+
+  .term-body {
+    padding: 0 0.8rem 0.9rem;
+  }
+
+  .term-chip {
+    gap: 0.45rem;
+    padding: 0.45rem 0.5rem;
+  }
+
+  .term-chip__logo {
+    width: 26px;
+    height: 26px;
+  }
+
+  .term-chip__logo[style*="--logo"]::before {
+    inset: 5px;
+  }
+
+  .term-chip__name {
+    font-size: 0.8rem;
+  }
+
+  .term-count {
+    font-size: 1.3rem;
+  }
+}
+
+/* ---------- Reduced motion ---------- */
+
+@media (prefers-reduced-motion: reduce) {
+  .term-prompt__cursor {
+    animation: none;
+  }
+
+  .term-js [data-reveal],
+  .term-js [data-reveal] .term-chip {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+
+  .term-js [data-reveal] .term-prompt__cmd,
+  .term-js [data-reveal].is-in .term-prompt__cmd {
+    width: auto;
+    animation: none;
+  }
+
+  .term-chip:hover,
+  .term-js [data-reveal].is-in .term-chip:hover {
+    transform: none;
+  }
+}

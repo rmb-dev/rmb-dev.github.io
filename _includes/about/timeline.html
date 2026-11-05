@@ -1,13 +1,44 @@
-<div class="col mt-4">
-  <div class="timeline-body bg-themed">
-    {% for item in site.data.timeline %}
-    <div class="timeline-item">
-      <div class="content">
-        <h4>{{ item.title }}</h4>
-        <h6 class="date">{{ item.date }}</h6>
-        <p>{{ item.description }}</p>
-      </div>
-    </div>
-    {% endfor %}
+{%- comment -%}
+  Education & certifications timeline. Data: _data/timeline.yml
+  "Course, Issuer" titles are split on the last comma; "A · B · C"
+  descriptions are shown as tags.
+{%- endcomment -%}
+{%- assign tl = site.data.timeline -%}
+{%- assign tl_first = tl | last -%}
+{%- assign tl_last = tl | first -%}
+{%- capture tl_summary -%}<span><strong>{{ tl.size }}</strong> entries</span><span class="term-summary__dot" aria-hidden="true"></span><span><strong>{{ tl_first.date }}</strong> – <strong>{{ tl_last.date }}</strong></span>{%- endcapture -%}
+
+<section class="tl" aria-labelledby="tl-title">
+{% include term/heading.html tag="h2" id="tl-title" title="Education &amp; Certifications" cmd="cat ./timeline.log" summary=tl_summary %}
+<div class="term-panel" data-term-panel data-reveal>
+  <div class="term-bar" aria-hidden="true">
+    <span class="term-lights"><i></i><i></i><i></i></span>
+    <span class="term-path">~/about/timeline.log</span>
+    <span class="term-bar__end">{{ tl.size }} entries</span>
   </div>
+  <ol class="term-timeline term-body">
+    {%- for item in tl %}
+    {%- assign parts = item.title | split: ', ' -%}
+    {%- assign issuer = '' -%}
+    {%- assign course = item.title -%}
+    {%- if parts.size > 1 -%}
+      {%- assign issuer = parts | last -%}
+      {%- assign issuer_suffix = ', ' | append: issuer -%}
+      {%- assign course = item.title | remove: issuer_suffix -%}
+    {%- endif %}
+    <li class="term-timeline__item">
+      <span class="term-tag term-tag--plain term-timeline__date">{{ item.date }}</span>
+      <h3 class="term-title">{{ course | strip }}{% if issuer != '' %}<span class="term-sub">{{ issuer }}</span>{% endif %}</h3>
+      {%- if item.description %}
+      <ul class="term-tags term-timeline__tags">
+        {%- assign topics = item.description | split: ' · ' -%}
+        {%- for t in topics %}
+        <li class="term-tag term-tag--plain">{{ t | strip }}</li>
+        {%- endfor %}
+      </ul>
+      {%- endif %}
+    </li>
+    {%- endfor %}
+  </ol>
 </div>
+</section>

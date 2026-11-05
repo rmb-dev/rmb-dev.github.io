@@ -1,0 +1,370 @@
+/* ==========================================================================
+   CJCA Exam Kit — Blog page
+   Panels, title bars, heading and animation come from terminal.css;
+   this file covers the exam-kit specific parts.
+   ========================================================================== */
+
+:root {
+  --xk-theory-bg: var(--htb-blue-soft);
+  --xk-theory-fg: #5cb0ff;
+  --xk-interactive-bg: var(--htb-green-soft);
+  --xk-interactive-fg: var(--htb-green);
+  --xk-kit-bg: var(--htb-yellow-soft);
+  --xk-kit-fg: var(--htb-yellow);
+}
+
+/* ---------- Hero ---------- */
+
+.xk-hero .term-heading {
+  margin-bottom: 0.75rem;
+}
+
+.xk-hero__lead {
+  color: var(--htb-muted);
+  max-width: 46rem;
+  margin-bottom: 1.25rem;
+}
+
+.xk-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.xk-toolbar__search {
+  flex: 1 1 18rem;
+  width: auto;
+}
+
+.xk-empty {
+  color: var(--htb-muted);
+  font-style: italic;
+}
+
+/* ---------- Shared summary reset ---------- */
+
+.xk-module > summary,
+.xk-topic > summary {
+  list-style: none;
+  cursor: pointer;
+}
+
+.xk-module > summary::-webkit-details-marker,
+.xk-topic > summary::-webkit-details-marker {
+  display: none;
+}
+
+.xk-chevron {
+  margin-left: auto;
+  color: var(--htb-muted);
+  transition: transform 0.2s ease;
+  flex-shrink: 0;
+}
+
+.term-count + .xk-chevron {
+  margin-left: 0.25rem;
+}
+
+details[open] > summary .xk-module__head-chevron,
+.xk-module[open] > summary .term-head .xk-chevron,
+.xk-topic[open] > summary > .xk-chevron {
+  transform: rotate(180deg);
+}
+
+/* ---------- Module (a .term-panel) ---------- */
+
+.xk-module.term-panel {
+  display: block;          /* <details> doesn't do flex reliably */
+  margin-bottom: 0.9rem;
+}
+
+.xk-module > summary .term-head {
+  padding-bottom: 1rem;
+}
+
+.xk-module > summary:hover .term-title {
+  color: var(--accent);
+}
+
+.xk-module__progress {
+  font-variant-numeric: tabular-nums;
+}
+
+.xk-module__progress.is-complete {
+  color: var(--htb-green);
+  font-weight: 600;
+}
+
+.xk-module__progress.is-complete::before {
+  content: "✓ ";
+}
+
+.xk-module__body {
+  padding: 0.25rem 1.1rem 1.25rem;
+  border-top: 1px solid var(--htb-border);
+}
+
+.xk-module--placeholder .term-title {
+  color: var(--htb-muted);
+  font-weight: 500;
+}
+
+.xk-module--placeholder .term-icon {
+  box-shadow: inset 0 0 0 1px var(--htb-border);
+}
+
+.xk-placeholder-note {
+  margin: 1rem 0 0;
+  color: var(--htb-muted);
+}
+
+/* ---------- Section ---------- */
+
+.xk-section {
+  margin-top: 1.25rem;
+}
+
+.xk-section__title {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 1rem;
+  font-weight: 600;
+  margin: 0 0 0.6rem;
+  color: var(--htb-heading);
+}
+
+.xk-section__num {
+  font-family: var(--term-mono);
+  color: var(--htb-green);
+}
+
+/* Exam kit: a nested yellow terminal panel */
+.xk-section--kit.term-panel {
+  display: block;
+  margin-top: 1.5rem;
+}
+
+.xk-section--kit .xk-section__title {
+  gap: 0.75rem;
+  padding: 1rem 1rem 0.25rem;
+  margin-bottom: 0.6rem;
+}
+
+.xk-section--kit .term-icon {
+  width: 34px;
+  height: 34px;
+  font-size: 0.9rem;
+}
+
+.xk-section--kit .xk-topics,
+.xk-section--kit .xk-section__intro {
+  padding: 0 1rem 1rem;
+}
+
+/* ---------- Topic (styled like a .term-chip) ---------- */
+
+.xk-topics {
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+}
+
+.xk-topic {
+  --c: var(--htb-green);
+  border: 1px solid var(--htb-border);
+  border-radius: 10px;
+  background: color-mix(in srgb, var(--htb-bg-deep) 70%, transparent);
+  transition: border-color 0.25s ease, box-shadow 0.25s ease, background 0.25s ease, transform 0.25s ease;
+}
+
+.xk-topic:has(.xk-badge--theory) { --c: var(--xk-theory-fg); }
+.xk-topic:has(.xk-badge--exam-kit) { --c: var(--xk-kit-fg); }
+
+.xk-topic:not([open]):hover {
+  transform: translateX(3px);
+}
+
+.xk-topic:hover,
+.xk-topic[open] {
+  border-color: color-mix(in srgb, var(--c) 55%, transparent);
+  background: color-mix(in srgb, var(--c) 6%, var(--htb-bg-deep));
+  box-shadow: 0 10px 26px -18px var(--c);
+}
+
+.xk-topic__head {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.55rem 0.9rem;
+  border-radius: 10px;
+}
+
+.xk-topic__title {
+  color: var(--htb-heading);
+  min-width: 0;
+}
+
+.xk-topic__done {
+  color: var(--htb-green);
+  display: none;
+}
+
+.xk-topic.is-done .xk-topic__done {
+  display: inline-block;
+}
+
+.xk-topic.is-done .xk-topic__title {
+  color: var(--htb-muted);
+}
+
+.xk-topic__body {
+  padding: 0.25rem 1.1rem 0.9rem;
+  border-top: 1px solid var(--htb-border);
+}
+
+.xk-topic__body .markdown-body {
+  padding-top: 0.75rem;
+  overflow-wrap: anywhere;
+}
+
+.xk-topic__body .markdown-body > :last-child {
+  margin-bottom: 0;
+}
+
+.xk-topic__body table {
+  display: block;
+  overflow-x: auto;
+  margin-bottom: 1rem;
+}
+
+.xk-topic__body th,
+.xk-topic__body td {
+  padding: 0.35rem 0.75rem;
+  border: 1px solid var(--htb-border);
+}
+
+.xk-topic__body blockquote {
+  border-left: 4px solid var(--htb-green);
+  padding-left: 0.9rem;
+  color: var(--htb-muted);
+}
+
+.xk-topic__actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 1rem;
+}
+
+.xk-topic__actions .btn {
+  font-family: var(--term-mono);
+  font-size: 0.78rem;
+}
+
+.xk-topic.is-done [data-mark-done] {
+  background: var(--htb-green);
+  border-color: var(--htb-green);
+  color: var(--htb-bg);
+}
+
+/* Quiz items inside the exam kit */
+.xk-topic__body details:not(.xk-topic) {
+  border-left: 3px solid var(--xk-kit-fg);
+  background: color-mix(in srgb, var(--htb-surface) 80%, transparent);
+  border-radius: 0 8px 8px 0;
+  padding: 0.5rem 0.9rem;
+  margin-bottom: 0.5rem;
+}
+
+.xk-topic__body details:not(.xk-topic) > summary {
+  cursor: pointer;
+  font-weight: 500;
+  color: var(--htb-heading);
+}
+
+.xk-topic__body details:not(.xk-topic)[open] > summary {
+  margin-bottom: 0.5rem;
+}
+
+.xk-topic__body details:not(.xk-topic) > :last-child {
+  margin-bottom: 0;
+}
+
+/* ---------- Badges ---------- */
+
+.xk-badge {
+  font-family: var(--term-mono);
+  font-size: 0.68rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  padding: 0.25rem 0.5rem;
+  border-radius: 6px;
+  white-space: nowrap;
+  flex-shrink: 0;
+  min-width: 7.2rem;
+  text-align: center;
+}
+
+.xk-badge--theory {
+  background: var(--xk-theory-bg);
+  color: var(--xk-theory-fg);
+}
+
+.xk-badge--interactive {
+  background: var(--xk-interactive-bg);
+  color: var(--xk-interactive-fg);
+}
+
+.xk-badge--exam-kit {
+  background: var(--xk-kit-bg);
+  color: var(--xk-kit-fg);
+}
+
+/* ---------- Filter / target ---------- */
+
+.xk-module[hidden],
+.xk-section[hidden],
+.xk-topic[hidden] {
+  display: none !important;
+}
+
+.xk-topic:target,
+.xk-topic.is-target {
+  box-shadow: 0 0 0 2px var(--htb-green);
+}
+
+/* ---------- Small screens ---------- */
+
+@media (max-width: 575.98px) {
+  .xk-module__body {
+    padding: 0.25rem 0.75rem 1rem;
+  }
+
+  .xk-topic__head {
+    flex-wrap: wrap;
+    gap: 0.4rem 0.6rem;
+  }
+
+  .xk-badge {
+    min-width: 0;
+  }
+
+  .xk-module .term-path {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .xk-chevron,
+  .xk-topic {
+    transition: none;
+  }
+
+  .xk-topic:not([open]):hover {
+    transform: none;
+  }
+}

@@ -1,21 +1,35 @@
-<div class="wow animated fadeIn" data-wow-delay=".15s">
-  <a href="{{ project_url }}" class="project card text-themed" {%- if external and site.open_new_tab -%} target="_blank" {%- endif -%}>
-    {%- if project_img -%}
-    <img id="{{ project_id }}-img" class="card-img-top" src="{{ project_img }}" alt="{{ project_name }}" />
-    {%- endif -%}
-    <div class="card-body">
-      <h5 id="{{ project_id }}-name" class="card-title">
-          {%- if project_type == "remote" -%}
-          <i class="fab fa-github" data-toggle="tooltip" data-placement="bottom" data-delay="250" title="GitHub Repository"></i> |&nbsp;
-          {%- endif -%}
-        {{ project_name }}
-      </h5>
-      <p id="{{ project_id }}-desc" class="card-text">{{ project_desc }}</p>
-      <p id="{{ project_id }}-tools" class="card-text">
-        {%- for tool in project_tools -%}
-        <span class="badge badge-pill text-primary border border-primary ml-1">{{ tool }}</span>
-        {%- endfor -%}
-      </p>
-    </div>
-  </a>
-</div>
+<a href="{{ project_url }}" class="project-card term-panel" data-term-panel data-reveal {%- if external and site.open_new_tab %} target="_blank" rel="noopener noreferrer" {%- endif -%}>
+  <div class="term-bar" aria-hidden="true">
+    <span class="term-lights"><i></i><i></i><i></i></span>
+    <span class="term-path">~/projects/{{ project_id }}</span>
+    {%- if external %}
+    <span class="term-bar__end"><i class="fas fa-external-link-alt"></i></span>
+    {%- endif %}
+  </div>
+
+  {%- if project_img %}
+  <div class="term-media">
+    <img id="{{ project_id }}-img" src="{{ project_img }}" alt="" loading="lazy" />
+  </div>
+  {%- endif %}
+
+  <div class="term-head">
+    <span class="term-icon" aria-hidden="true">
+      {%- if project_type == "remote" -%}<i class="fab fa-github"></i>{%- else -%}<i class="fas fa-folder-open"></i>{%- endif -%}
+    </span>
+    <h2 id="{{ project_id }}-name" class="term-title">{{ project_name }}</h2>
+  </div>
+
+  <div class="term-body">
+    {%- if project_desc %}
+    <p id="{{ project_id }}-desc" class="project-card__desc">{{ project_desc }}</p>
+    {%- endif %}
+    {%- if project_tools.size > 0 %}
+    <ul id="{{ project_id }}-tools" class="term-tags" aria-label="Tools">
+      {%- for tool in project_tools %}
+      <li class="term-tag term-tag--plain">{{ tool }}</li>
+      {%- endfor %}
+    </ul>
+    {%- endif %}
+  </div>
+</a>

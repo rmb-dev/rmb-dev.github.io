@@ -1,16 +1,34 @@
 <div class="row justify-content-center align-items-center p-4">
-  <div class="col-lg-4 col-md-6 text-center mt-4">
+  <div class="col-lg-6 col-md-8 text-center mt-4 home">
 
     <!-- Fine Circle Responsive Image -->
-    <div id="container" class="my-2">
+    <div id="container" class="my-2 home__avatar">
       <div id="dummy"></div>
       <div id="element">
-        <img src="{{ site.author.image }}" alt="{{ site.title }}" class="circle-image wow animated zoomIn"
+        {%- assign avatar = site.author.image -%}{%- unless avatar contains "://" -%}{%- assign avatar = avatar | relative_url -%}{%- endunless -%}
+        <img src="{{ avatar }}" alt="{{ site.title }}" class="circle-image wow animated zoomIn"
           data-wow-delay=".1s">
       </div>
     </div>
 
-    <p class="wow animated slideInUp" data-wow-delay="1s">{{ site.description }}</p>
+    {% include term/heading.html title=site.title cmd="cat ./motd" %}
+
+    <p class="home__lead" data-reveal>{{ site.description }}</p>
+
+    <nav class="term-chips home__links" aria-label="Sections" data-reveal>
+      <a class="term-chip" href="{{ '/blog/' | relative_url }}" style="--c: var(--htb-green); --i: 0;">
+        <span class="term-chip__logo" aria-hidden="true"><i class="fas fa-clipboard-check"></i></span>
+        <span class="term-chip__name">CJCA Exam Kit</span>
+      </a>
+      <a class="term-chip" href="{{ '/projects/' | relative_url }}" style="--c: var(--htb-blue); --i: 1;">
+        <span class="term-chip__logo" aria-hidden="true"><i class="fas fa-folder-open"></i></span>
+        <span class="term-chip__name">Projects</span>
+      </a>
+      <a class="term-chip" href="{{ '/about/' | relative_url }}" style="--c: var(--htb-aqua); --i: 2;">
+        <span class="term-chip__logo" aria-hidden="true"><i class="fas fa-user-secret"></i></span>
+        <span class="term-chip__name">About</span>
+      </a>
+    </nav>
 
   </div>
 </div>

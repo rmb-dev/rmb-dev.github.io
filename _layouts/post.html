@@ -2,29 +2,42 @@
 layout: page
 ---
 
-<h1><b>{{ page.title }}</b></h1>
+{%- if page.collection == 'projects' -%}
+  {%- assign post_title = page.name | default: page.title -%}
+{%- else -%}
+  {%- assign post_title = page.title -%}
+{%- endif -%}
+{%- assign words = content | number_of_words -%}
+{%- if page.collection == 'projects' -%}
+  {%- assign post_cwd = '~/projects' -%}
+  {%- assign post_tags = page.tools -%}
+{%- else -%}
+  {%- assign post_cwd = '~/blog' -%}
+  {%- assign post_tags = page.tags -%}
+{%- endif -%}
+{%- assign post_cmd = page.slug | slugify | prepend: 'cat ./' | append: '.md' -%}
 
-<p class="post-metadata text-muted">
-  {{ page.date | date_to_long_string }} -
-  <b>
-    {%- assign words = content | number_of_words -%}
-    {%- if words < 360 -%} less than 1 min read time {%- else -%} {{ words | divided_by: 180 }} mins read time {%- endif
-      -%} </b>
+{%- capture post_summary -%}
+<span>{{ page.date | date: '%B %-d, %Y' }}</span><span class="term-summary__dot" aria-hidden="true"></span><span>{%- if words < 360 -%}<strong>&lt; 1</strong> min read{%- else -%}<strong>{{ words | divided_by: 180 }}</strong> min read{%- endif -%}</span>
+{%- endcapture -%}
 
-      <br>
+{% include term/heading.html title=post_title cwd=post_cwd cmd=post_cmd summary=post_summary %}
 
-      {%- if page.tags != empty -%}
-      Tags:
-      {% for tag in page.tags %}
-      <a class="text-decoration-none no-underline" href="{{ tag | slugify | prepend:'/blog/tags#' | relative_url }}">
-        <span class="tag badge badge-pill text-primary border border-primary">{{ tag }}</span>
-      </a>
-      {% endfor %}
-      {%- endif -%}
+{%- if post_tags and post_tags != empty %}
+<ul class="term-tags post-tags" aria-label="Tags">
+  {%- for tag in post_tags %}
+  {%- if page.collection == 'projects' %}
+  <li class="term-tag term-tag--plain">{{ tag }}</li>
+  {%- else %}
+  <li><a class="term-tag no-underline" href="{{ tag | slugify | prepend: '/blog/tags#tag-' | relative_url }}">{{ tag }}</a></li>
+  {%- endif %}
+  {%- endfor %}
+</ul>
+{%- endif %}
 
-</p>
-
+<div class="post-content">
 {{ content }}
+</div>
 
 {% if page.comments %}
 <div class="pt-5">

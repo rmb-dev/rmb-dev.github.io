@@ -1,46 +1,15 @@
-const STORAGE_KEY = "theme";
-const THEME_ATTR = "data-theme";
-const QUERY_KEY = "(prefers-color-scheme: dark)";
+// The site uses a single dark theme (Hack The Box palette, see assets/css/htb.css).
+// The attribute is also set in the HTML; this covers any page that omits it.
+document.documentElement.setAttribute("data-theme", "dark");
 
-const themes = {
-  DARK: "dark",
-  LIGHT: "light",
-};
-
-initTheme();
-
-function initTheme() {
-  const savedTheme = localStorage.getItem(STORAGE_KEY);
-
-  if (savedTheme) {
-    // Storage theme
-    setTheme(savedTheme);
-  } else if (window.matchMedia && window.matchMedia(QUERY_KEY).matches) {
-    // system theme
-    setTheme(themes.LIGHT);
-  } else {
-    // Default theme
-    setTheme(themes.DARK);
-  }
-
-  // Watch for system theme changes
-  window.matchMedia(QUERY_KEY).addEventListener("change", (e) => {
-    const newTheme = e.matches ? themes.DARK : themes.LIGHT;
-    setTheme(newTheme);
-  });
-}
-
-function toggleTheme() {
-  const theme = getTheme();
-  const newTheme = theme === themes.DARK ? themes.LIGHT : themes.DARK;
-  setTheme(newTheme);
-  localStorage.setItem(STORAGE_KEY, newTheme);
-}
-
-function getTheme() {
-  return document.documentElement.getAttribute(THEME_ATTR);
-}
-
-function setTheme(value) {
-  document.documentElement.setAttribute(THEME_ATTR, value);
+// Enable scroll-reveal styles early (before first paint) so content doesn't flash.
+// terminal.js does the revealing; if it never runs, show everything after 2.5s.
+if ("IntersectionObserver" in window) {
+  document.documentElement.classList.add("term-js");
+  setTimeout(function () {
+    if (window.__termReady) return;
+    document.querySelectorAll("[data-reveal]").forEach(function (el) {
+      el.classList.add("is-in");
+    });
+  }, 2500);
 }

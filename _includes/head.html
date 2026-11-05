@@ -3,6 +3,7 @@
   {% assign title = page.title | default: site.title | escape %}
   {% assign description = page.description | default: site.description | strip_html | strip_newlines | truncate: 160 %}
   {% assign image = page.image | default: site.author.image %}
+  {% unless image contains '://' %}{% assign image = image | absolute_url %}{% endunless %}
 
   {% if page.name and page.collection == 'projects' %}
     {% assign title = page.name | escape %}
@@ -36,5 +37,21 @@
 
   <!-- Custom CSS -->
   <link rel="stylesheet" href="{{ '/assets/css/style.css' | relative_url }}">
+
+  <!-- Hack The Box colour scheme (single dark theme) -->
+  <meta name="color-scheme" content="dark">
+  <meta name="theme-color" content="#141d2b">
+  <link rel="stylesheet" href="{{ '/assets/css/htb.css' | relative_url }}">
+  <link rel="stylesheet" href="{{ '/assets/css/terminal.css' | relative_url }}">
+
+  {%- if page.tech_stack %}
+  <!-- About page tech stack CSS -->
+  <link rel="stylesheet" href="{{ '/assets/css/tech-stack.css' | relative_url }}">
+  {%- endif %}
+
+  {%- if page.exam_kit %}
+  <!-- Exam kit CSS -->
+  <link rel="stylesheet" href="{{ '/assets/css/exam-kit.css' | relative_url }}">
+  {%- endif %}
 
 </head>
